@@ -41,6 +41,7 @@ public class PropertyQueryDto
     public bool? IsBeachFacing { get; set; }
     public bool? HasGarden { get; set; }
     public int? Guests { get; set; }
+    public string? SortBy { get; set; }
     public int Page { get; set; } = 1;
     public int PageSize { get; set; } = 9;
 }

@@ -53,9 +53,21 @@ public class PropertyService : IPropertyService
 
         var totalCount = await q.CountAsync();
 
+        if (!string.IsNullOrEmpty(query.SortBy))
+        {
+            if (query.SortBy == "price_asc")
+                q = q.OrderBy(x => x.Price);
+            else if (query.SortBy == "price_desc")
+                q = q.OrderByDescending(x => x.Price);
+            else // Default to recommended
+                q = q.OrderByDescending(x => x.Rating).ThenBy(x => x.Price);
+        }
+        else
+        {
+            q = q.OrderByDescending(x => x.Rating).ThenBy(x => x.Price);
+        }
+
         var items = await q
-            .OrderByDescending(x => x.Rating)
-            .ThenBy(x => x.Price)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .Select(x => x.ToDto())
