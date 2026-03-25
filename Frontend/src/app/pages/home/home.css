@@ -1,0 +1,188 @@
+.rap-home {
+  background: linear-gradient(180deg, #f3f3fb 0%, #f8f8fc 55%, #f3f3fb 100%);
+  min-height: calc(100vh - 72px);
+}
+
+.rap-hero {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 4.5rem 1.25rem 3rem;
+  text-align: center;
+}
+
+.rap-pill {
+  background: #ecebfb;
+  border: 1px solid #d7d5f3;
+  border-radius: 999px;
+  color: var(--rap-accent-deep);
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.1rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.rap-title {
+  font-size: clamp(2.2rem, 9vw, 5rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+}
+
+.rap-title span {
+  color: var(--rap-accent-deep);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.rap-subtitle {
+  color: var(--rap-muted);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin: 1.3rem auto 2rem;
+  max-width: 650px;
+}
+
+.rap-search-card {
+  background: var(--rap-surface);
+  border: 1px solid var(--rap-border);
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(69, 66, 104, 0.08);
+  margin: 0 auto;
+  max-width: 760px;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.rap-field label {
+  color: var(--rap-accent-deep);
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.rap-field p {
+  color: var(--rap-muted);
+  margin: 0;
+}
+
+.rap-divider {
+  background: #ecebf8;
+  height: 1px;
+  margin: 1rem 0;
+}
+
+.rap-hero-actions {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.rap-cta {
+  background: var(--rap-accent);
+  border-radius: 12px;
+  color: #fff;
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 0.9rem 2rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.rap-link {
+  color: var(--rap-accent-deep);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.rap-how,
+.rap-featured {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 4rem 1.25rem;
+}
+
+.rap-how h2,
+.rap-featured h2 {
+  font-size: clamp(2rem, 6vw, 2.6rem);
+  text-align: center;
+}
+
+.rap-underline {
+  background: #d9b25d;
+  border-radius: 999px;
+  height: 4px;
+  margin: 0.7rem auto 2rem;
+  width: 56px;
+}
+
+.rap-grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.rap-box {
+  background: var(--rap-surface);
+  border: 1px solid var(--rap-border);
+  border-radius: 18px;
+  padding: 1.4rem;
+}
+
+.rap-icon {
+  align-items: center;
+  background: #f0effc;
+  border-radius: 10px;
+  color: var(--rap-accent-deep);
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 800;
+  height: 2rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 2rem;
+}
+
+.rap-box h3 {
+  margin-bottom: 0.5rem;
+}
+
+.rap-box p {
+  color: var(--rap-muted);
+}
+
+.rap-featured-head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.rap-featured-head h2 {
+  margin: 0;
+  text-align: left;
+}
+
+.rap-featured-head a {
+  color: var(--rap-accent-deep);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .rap-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rap-hero-actions {
+    flex-direction: column;
+  }
+}

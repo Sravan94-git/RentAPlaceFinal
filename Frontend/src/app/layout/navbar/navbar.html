@@ -1,0 +1,56 @@
+<!-- Top Promo Banner -->
+<div class="w-full bg-ink text-white py-2 px-4 text-center text-[10px] sm:text-xs font-bold tracking-[0.1em] uppercase">
+  ✨ Exclusive Stays Across India &amp; Beyond &nbsp;·&nbsp; Book Now &amp; Save 10% with Code <span class="text-gold">STAY10</span>
+</div>
+
+<!-- Main Navbar -->
+<nav class="w-full border-b border-border bg-white px-6 py-4 font-sans shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] sticky top-0 z-40">
+  <div class="mx-auto flex max-w-[1400px] items-center justify-between">
+    
+    <!-- Left: Logo -->
+    <div class="w-1/4">
+      <a routerLink="/" class="font-serif text-3xl font-black tracking-tight text-ink hover:opacity-80 transition-opacity inline-flex items-baseline gap-0">
+        Rent<span class="font-extralight italic text-accent/90">APlace</span>
+      </a>
+    </div>
+
+    <!-- Center: Links -->
+    <div class="hidden md:flex flex-1 justify-center items-center space-x-8 text-[13px] font-semibold text-muted tracking-wide">
+      <a *ngIf="!isLoggedIn" routerLink="/" routerLinkActive="text-ink" [routerLinkActiveOptions]="{exact: true}" class="transition-colors hover:text-ink">Home</a>
+      <a routerLink="/properties" routerLinkActive="text-ink" class="transition-colors hover:text-ink">Properties</a>
+      <a *ngIf="isLoggedIn && isRenter" routerLink="/my-bookings" routerLinkActive="text-ink" class="transition-colors hover:text-ink">My Bookings</a>
+      <a *ngIf="isLoggedIn && isOwner" routerLink="/owner" routerLinkActive="text-ink" class="transition-colors hover:text-ink">Dashboard</a>
+      <a *ngIf="isLoggedIn && isOwner" routerLink="/add-property" routerLinkActive="text-ink" class="transition-colors hover:text-ink">Add Property</a>
+    </div>
+
+    <!-- Right: Actions/Auth -->
+    <div class="flex w-1/4 justify-end items-center gap-4 text-sm font-medium">
+      
+      <div *ngIf="!isLoggedIn" class="flex items-center gap-4">
+        <a routerLink="/login" class="text-xs font-bold text-ink hover:text-accent transition-colors">Sign In</a>
+        <a routerLink="/register" class="text-xs font-bold text-white bg-ink px-4 py-2 rounded-full hover:bg-black transition-colors">Register</a>
+      </div>
+
+      <div *ngIf="isLoggedIn" class="flex items-center gap-4 text-ink">
+        <a routerLink="/messages" class="hover:text-accent transition-colors" title="Messages">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </a>
+        
+        <div class="flex items-center gap-2 border-l border-gray-200 pl-4">
+          <span class="text-xs font-bold text-muted uppercase tracking-wider hidden sm:inline-block">
+            {{ isOwner ? 'Owner' : 'Renter' }}
+          </span>
+          <button (click)="logout()" class="text-muted hover:text-red-500 transition-colors" title="Logout">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</nav>

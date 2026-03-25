@@ -1,0 +1,317 @@
+<div class="min-h-screen bg-warm font-sans text-ink">
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex items-center justify-center min-h-screen">
+    <div class="flex flex-col items-center gap-4">
+      <div class="animate-spin w-12 h-12 border-4 border-accent border-t-transparent rounded-full"></div>
+      <p class="text-muted font-medium">Loading property details...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!loading && error" class="flex items-center justify-center min-h-screen">
+    <div class="text-center">
+      <p class="text-5xl mb-4">🏚️</p>
+      <h2 class="font-serif text-2xl text-ink mb-2">{{ error }}</h2>
+      <a routerLink="/properties" class="text-accent font-bold hover:underline">← Back to Properties</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && property">
+
+    <!-- Breadcrumb -->
+    <div class="max-w-7xl mx-auto px-6 py-5">
+      <nav class="flex items-center gap-2 text-sm text-muted">
+        <a routerLink="/" class="hover:text-accent transition-colors">Home</a>
+        <span>/</span>
+        <a routerLink="/properties" class="hover:text-accent transition-colors">Properties</a>
+        <span>/</span>
+        <span class="text-ink font-medium truncate max-w-xs">{{ property.title }}</span>
+      </nav>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="max-w-7xl mx-auto px-6 mb-8">
+      <div class="relative w-full aspect-[16/6] md:aspect-[21/7] rounded-3xl overflow-hidden bg-gray-100 shadow-xl">
+        <img *ngIf="property.imageUrl" [src]="property.imageUrl" [alt]="property.title"
+          class="w-full h-full object-cover" />
+        <div *ngIf="!property.imageUrl"
+          class="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent/10 to-accent/5">
+          <svg class="w-20 h-20 text-accent/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <!-- Type badge -->
+        <div class="absolute top-4 left-4">
+          <span class="bg-white/90 backdrop-blur-sm text-ink px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
+            {{ property.propertyType }}
+          </span>
+        </div>
+        <!-- Hot badge -->
+        <div *ngIf="property.rating >= 4.8" class="absolute top-4 right-4">
+          <span class="bg-red-500 text-white px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
+            🔥 Hot Property
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body: Info + Booking Card -->
+    <div class="max-w-7xl mx-auto px-6 pb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 items-start">
+
+        <!-- LEFT: Details -->
+        <div class="space-y-10">
+
+          <!-- Title & Meta -->
+          <div>
+            <h1 class="font-serif text-4xl md:text-5xl font-black text-ink mb-3 leading-tight">{{ property.title }}</h1>
+            <div class="flex flex-wrap items-center gap-4 text-sm text-muted mb-5">
+              <span class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                {{ property.location }}
+              </span>
+              <span class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="font-semibold text-ink">{{ property.rating }}</span> rating
+              </span>
+              <span class="flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Up to {{ property.maxGuests }} guests
+              </span>
+            </div>
+            <!-- Price -->
+            <div class="flex items-baseline gap-2">
+              <span class="font-black text-4xl text-ink">₹{{ property.price | number }}</span>
+              <span class="text-muted text-lg font-light">/ night</span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <h2 class="font-serif text-2xl font-bold text-ink mb-3">About this property</h2>
+            <p *ngIf="property.description" class="text-muted leading-relaxed text-[15px]">{{ property.description }}</p>
+            <p *ngIf="!property.description" class="text-muted leading-relaxed text-[15px]">
+              Experience the finest luxury accommodation at {{ property.title }}, nestled in the heart of {{ property.location }}.
+              Whether you're looking for a romantic escape, a family retreat, or a solo adventure, this stunning property offers
+              world-class amenities and breathtaking surroundings. Every detail has been curated for an unforgettable stay.
+            </p>
+          </div>
+
+          <!-- Amenities -->
+          <div>
+            <h2 class="font-serif text-2xl font-bold text-ink mb-4">What's included</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div *ngFor="let a of amenities"
+                class="flex flex-col items-center p-4 rounded-2xl border transition-all"
+                [class]="a.available ? 'border-accent/20 bg-accent/5 text-ink' : 'border-border bg-white text-muted/40 line-through opacity-40'">
+                <span class="text-2xl mb-2">{{ a.icon }}</span>
+                <span class="text-[11px] font-bold text-center uppercase tracking-wide">{{ a.label }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Location Info -->
+          <div>
+            <h2 class="font-serif text-2xl font-bold text-ink mb-3">Location</h2>
+            <div class="rounded-2xl border border-border bg-white p-5 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-2xl flex-shrink-0">📍</div>
+              <div>
+                <p class="font-bold text-ink">{{ property.location }}</p>
+                <p class="text-muted text-sm mt-0.5">Exact address shared after booking confirmation</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- House Rules -->
+          <div>
+            <h2 class="font-serif text-2xl font-bold text-ink mb-4">House Rules</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="flex items-center gap-3 bg-white border border-border rounded-xl p-4">
+                <span class="text-lg">🕐</span>
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-wider text-muted">Check-in</p>
+                  <p class="font-semibold text-ink text-sm">After 2:00 PM</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white border border-border rounded-xl p-4">
+                <span class="text-lg">🕐</span>
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-wider text-muted">Check-out</p>
+                  <p class="font-semibold text-ink text-sm">Before 11:00 AM</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white border border-border rounded-xl p-4">
+                <span class="text-lg">🚭</span>
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-wider text-muted">Smoking</p>
+                  <p class="font-semibold text-ink text-sm">Not allowed indoors</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white border border-border rounded-xl p-4">
+                <span class="text-lg">🐾</span>
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-wider text-muted">Pets</p>
+                  <p class="font-semibold text-ink text-sm">Not allowed</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Owner -->
+          <div *ngIf="isLoggedIn && !isOwner">
+            <h2 class="font-serif text-2xl font-bold text-ink mb-4">Contact Owner</h2>
+            <div class="bg-white border border-border rounded-2xl p-6 shadow-sm">
+              <div *ngIf="messageSuccess" class="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl text-sm font-medium mb-4 flex items-center gap-2">
+                <span>✅</span> {{ messageSuccess }}
+              </div>
+              
+              <div *ngIf="messageError" class="bg-red-50 border border-red-100 text-red-600 p-4 rounded-xl text-sm font-medium mb-4 flex items-center gap-2">
+                <span>⚠️</span> {{ messageError }}
+              </div>
+
+              <div *ngIf="!messageSuccess">
+                <p class="text-muted text-sm mb-4">Have questions about this property? Send a direct message to the owner.</p>
+                <textarea 
+                  [(ngModel)]="messageContent" 
+                  rows="4" 
+                  placeholder="Hi, I'm interested in this property..." 
+                  class="w-full rounded-xl border border-border bg-warm px-4 py-3 text-sm text-ink focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none mb-3 resize-none"
+                ></textarea>
+                <div class="flex justify-end">
+                  <button 
+                    (click)="sendMessageToOwner()" 
+                    [disabled]="messageLoading || !messageContent.trim()"
+                    class="bg-[#9599C8] hover:bg-[#6064A0] text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-md shadow-[#9599C8]/20"
+                  >
+                    <span *ngIf="messageLoading" class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
+                    {{ messageLoading ? 'Sending...' : 'Send Message' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Sticky Booking Card -->
+        <div class="sticky top-[90px]">
+          <div class="bg-white rounded-3xl border border-border shadow-xl overflow-hidden">
+
+            <!-- Card Header -->
+            <div class="bg-gradient-to-r from-ink to-ink/80 text-white p-6">
+              <p class="text-white/60 text-xs font-bold uppercase tracking-widest mb-1">Price per night</p>
+              <div class="flex items-baseline gap-2">
+                <span class="font-black text-3xl">₹{{ property.price | number }}</span>
+              </div>
+              <div class="flex items-center gap-1 mt-2">
+                <svg *ngFor="let i of [1,2,3,4,5]" class="w-3.5 h-3.5 text-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-white/70 text-xs ml-1">{{ property.rating }} · Excellent</span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+
+              <!-- Success Banner -->
+              <div *ngIf="bookingSuccess"
+                class="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl text-sm font-medium text-center">
+                {{ bookingSuccess }}
+                <div class="mt-3">
+                  <a routerLink="/my-bookings" class="font-bold text-green-800 hover:underline">View My Bookings →</a>
+                </div>
+              </div>
+
+              <!-- Login to Book Notice for guests -->
+              <div *ngIf="!isLoggedIn" class="bg-accent/5 border border-accent/20 p-4 rounded-xl text-center">
+                <p class="text-sm text-ink font-medium mb-3">Sign in to book this property</p>
+                <a routerLink="/login" class="block w-full bg-accent hover:bg-accent-hover text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-accent/20">
+                  Sign In to Book
+                </a>
+                <p class="text-xs text-muted mt-2">Don't have an account? <a routerLink="/register" class="text-accent font-bold">Register free</a></p>
+              </div>
+
+              <!-- Booking form for logged-in renters -->
+              <div *ngIf="isLoggedIn && !bookingSuccess">
+
+                <!-- Date grid -->
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-muted mb-1.5">Check In</label>
+                    <input type="date" [(ngModel)]="form.checkInDate" [min]="today"
+                      class="w-full rounded-xl border border-border bg-warm px-3 py-3 text-sm text-ink focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-wider text-muted mb-1.5">Check Out</label>
+                    <input type="date" [(ngModel)]="form.checkOutDate" [min]="form.checkInDate || tomorrow"
+                      class="w-full rounded-xl border border-border bg-warm px-3 py-3 text-sm text-ink focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none" />
+                  </div>
+                </div>
+
+                <!-- Guests -->
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-wider text-muted mb-1.5">Guests</label>
+                  <input type="number" [(ngModel)]="form.guests" min="1" [max]="property.maxGuests"
+                    class="w-full rounded-xl border border-border bg-warm px-3 py-3 text-sm text-ink focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none" />
+                  <p class="text-xs text-muted mt-1">Max {{ property.maxGuests }} guests allowed</p>
+                </div>
+
+                <!-- Price Summary -->
+                <div *ngIf="nights > 0" class="bg-warm rounded-xl p-4 space-y-2 border border-border">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-muted">₹{{ property.price | number }} × {{ nights }} nights</span>
+                    <span class="font-semibold text-ink">₹{{ (property.price * nights) | number }}</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-muted">Cleaning fee</span>
+                    <span class="font-semibold text-ink">₹500</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-muted">Service fee</span>
+                    <span class="font-semibold text-ink">₹250</span>
+                  </div>
+                  <div class="pt-2 border-t border-border flex justify-between font-black text-ink">
+                    <span>Total</span>
+                    <span class="text-accent">₹{{ (property.price * nights + 750) | number }}</span>
+                  </div>
+                </div>
+
+                <!-- Error -->
+                <div *ngIf="bookingError" class="bg-red-50 border border-red-100 text-red-600 p-3 rounded-xl text-sm font-medium">
+                  ⚠️ {{ bookingError }}
+                </div>
+
+                <!-- Book Button -->
+                <button (click)="book()" [disabled]="bookingLoading"
+                  class="w-full bg-accent hover:bg-accent-hover disabled:opacity-50 text-white py-4 rounded-xl font-bold text-sm tracking-wider transition-colors shadow-lg shadow-accent/20">
+                  {{ bookingLoading ? 'Confirming...' : nights > 0 ? 'Reserve Now — ₹' + ((property.price * nights + 750) | number) : 'Reserve Now' }}
+                </button>
+
+                <p class="text-center text-xs text-muted">No charge until confirmed · Free cancellation within 24h</p>
+              </div>
+
+              <!-- Owner notice -->
+              <div *ngIf="isLoggedIn && !isRenter && !bookingSuccess" class="text-center py-4">
+                <p class="text-muted text-sm">Owners can't book properties.</p>
+                <a routerLink="/owner" class="text-accent font-bold text-sm hover:underline">Go to your Dashboard →</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

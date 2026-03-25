@@ -1,0 +1,99 @@
+<div class="flex min-h-screen font-sans">
+
+  <!-- Left Panel: Hero Image -->
+  <div class="relative hidden lg:flex lg:w-1/2 flex-col items-start justify-end overflow-hidden">
+    <img src="/auth-hero.jpg" alt="Luxury Property" class="absolute inset-0 h-full w-full object-cover" />
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent"></div>
+    <!-- Stats card -->
+    <div class="relative z-10 p-12 text-white">
+      <div class="flex gap-8 mb-6">
+        <div>
+          <p class="text-3xl font-serif font-bold text-white">500+</p>
+          <p class="text-white/60 text-xs tracking-wider uppercase mt-1">Properties</p>
+        </div>
+        <div>
+          <p class="text-3xl font-serif font-bold text-white">12K+</p>
+          <p class="text-white/60 text-xs tracking-wider uppercase mt-1">Happy Guests</p>
+        </div>
+        <div>
+          <p class="text-3xl font-serif font-bold text-white">4.9★</p>
+          <p class="text-white/60 text-xs tracking-wider uppercase mt-1">Avg Rating</p>
+        </div>
+      </div>
+      <p class="text-white/70 text-sm leading-relaxed max-w-sm">Join thousands of hosts and travellers making meaningful
+        connections through RentAPlace.</p>
+    </div>
+  </div>
+
+  <!-- Right Panel: Register Form -->
+  <div class="flex w-full flex-col items-center justify-center bg-warm px-6 py-12 lg:w-1/2">
+    <div class="w-full max-w-[400px]">
+
+      <!-- Logo -->
+      <div class="mb-10 text-center">
+        <a routerLink="/"
+          class="inline-block font-serif text-3xl font-bold text-ink hover:opacity-80 transition-opacity">
+          Rent<span class="font-light italic text-accent">APlace</span>
+        </a>
+        <p class="mt-2 text-sm text-muted">Create your account to get started</p>
+      </div>
+
+      <!-- Form Card -->
+      <div class="rounded-2xl border border-border bg-white p-8 shadow-sm">
+        <div class="space-y-5">
+
+          <!-- Role Toggle -->
+          <div>
+            <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-muted">I am a</label>
+            <div class="flex w-full rounded-xl border border-border bg-warm p-1 gap-1">
+              <button (click)="role = 'Renter'"
+                [class]="role === 'Renter' ? 'bg-accent text-white shadow-sm' : 'text-muted hover:text-ink'"
+                class="flex-1 rounded-lg py-2.5 text-sm font-bold transition-all duration-200">
+                Renter
+              </button>
+              <button (click)="role = 'Owner'"
+                [class]="role === 'Owner' ? 'bg-accent text-white shadow-sm' : 'text-muted hover:text-ink'"
+                class="flex-1 rounded-lg py-2.5 text-sm font-bold transition-all duration-200">
+                Owner
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-muted">Full Name</label>
+            <input type="text" [(ngModel)]="fullName" placeholder="Enter your full name"
+              class="w-full rounded-xl border border-border bg-warm/60 px-4 py-3 text-sm text-ink outline-none transition-all focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20" />
+          </div>
+
+          <div>
+            <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-muted">Email Address</label>
+            <input type="email" [(ngModel)]="email" placeholder="you@example.com"
+              class="w-full rounded-xl border border-border bg-warm/60 px-4 py-3 text-sm text-ink outline-none transition-all focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20" />
+          </div>
+
+          <div>
+            <label class="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-muted">Password</label>
+            <input type="password" [(ngModel)]="password" placeholder="Min 8 characters"
+              class="w-full rounded-xl border border-border bg-warm/60 px-4 py-3 text-sm text-ink outline-none transition-all focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20" />
+          </div>
+
+          <button (click)="register()" [disabled]="loading"
+            class="mt-2 w-full rounded-xl bg-accent hover:bg-accent-hover py-3.5 text-center text-sm font-bold tracking-widest text-white transition-colors disabled:opacity-50 shadow-lg shadow-accent/20">
+            {{ loading ? 'CREATING ACCOUNT...' : 'CREATE ACCOUNT' }}
+          </button>
+
+          <p *ngIf="error"
+            class="rounded-xl bg-red-50 border border-red-100 p-3 text-center text-sm font-medium text-red-600">{{ error
+            }}</p>
+        </div>
+      </div>
+
+      <p class="mt-6 text-center text-sm text-muted">
+        Already have an account? <a routerLink="/login"
+          class="font-bold text-accent hover:text-ink transition-colors">Sign In →</a>
+      </p>
+    </div>
+  </div>
+
+</div>

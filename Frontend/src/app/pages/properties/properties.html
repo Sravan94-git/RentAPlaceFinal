@@ -1,0 +1,207 @@
+<div class="min-h-screen bg-warm text-ink font-sans selection:bg-accent selection:text-white">
+  
+  <main class="max-w-[1400px] mx-auto px-6 py-10">
+    
+    <div class="mb-8">
+      <h1 class="font-serif text-4xl font-bold mb-3 text-ink">Explore <span class="font-light italic text-accent">Properties</span></h1>
+      <p class="text-muted text-sm font-medium">Find your perfect stay from our exclusive global collection. Showing <span class="text-ink font-bold">{{ properties.length }}</span> of <span class="text-ink font-bold">{{ totalCount }}</span> properties.</p>
+    </div>
+
+    <div *ngIf="error" class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-600 text-sm font-medium">
+      {{ error }}
+    </div>
+    <div *ngIf="success" class="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 text-green-600 text-sm font-medium">
+      {{ success }}
+    </div>
+
+    <!-- E-Commerce Layout: Sidebar + Grid -->
+    <div class="flex flex-col lg:flex-row gap-8 relative items-start">
+      
+      <!-- Left Sidebar (Filters) -->
+      <aside class="w-full lg:w-[280px] flex-shrink-0 sticky top-[90px] self-start max-h-[calc(100vh-120px)] overflow-y-auto no-scrollbar pb-4 rounded-[24px]">
+        <div class="rounded-[24px] bg-white shadow-sm overflow-hidden p-6 border border-border">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="font-bold text-ink tracking-widest text-[11px] uppercase">FILTERS</h2>
+            <button (click)="resetFilters()" class="text-center text-[10px] font-bold text-muted hover:text-ink transition-colors uppercase tracking-widest">
+              Clear All
+            </button>
+          </div>
+          
+          <div class="space-y-6">
+            <!-- Location -->
+            <div class="flex flex-col">
+              <label class="text-[10px] text-gray-400 mb-2 font-bold uppercase tracking-wider">Location</label>
+              <div class="relative">
+                <input type="text" [(ngModel)]="search.location" placeholder="Search location..." class="w-full rounded-xl border border-border bg-warm/30 px-4 py-3 text-sm text-ink focus:border-accent focus:outline-none placeholder-muted/70" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute right-4 top-[14px] text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+              </div>
+            </div>
+            
+            <!-- Category (Property Type) -->
+            <div class="flex flex-col border-t border-border pt-6">
+              <label class="text-[10px] text-muted mb-3 font-bold uppercase tracking-wider">Categories</label>
+              <div class="space-y-3">
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="ptype" [(ngModel)]="search.propertyType" value="" class="rounded-full border-border text-accent focus:ring-accent focus:ring-offset-0 h-4 w-4 bg-warm" />
+                  <span class="text-[13px] text-ink group-hover:text-accent font-medium">All Types</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="ptype" [(ngModel)]="search.propertyType" value="Villa" class="rounded-full border-border text-accent focus:ring-accent focus:ring-offset-0 h-4 w-4 bg-warm" />
+                  <span class="text-[13px] text-ink group-hover:text-accent font-medium">Villas <span class="text-muted text-xs ml-1">({{ villaCount }})</span></span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="ptype" [(ngModel)]="search.propertyType" value="Apartment" class="rounded-full border-border text-accent focus:ring-accent focus:ring-offset-0 h-4 w-4 bg-warm" />
+                  <span class="text-[13px] text-ink group-hover:text-accent font-medium">Apartments <span class="text-muted text-xs ml-1">({{ apartmentCount }})</span></span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="radio" name="ptype" [(ngModel)]="search.propertyType" value="Bungalow" class="rounded-full border-border text-accent focus:ring-accent focus:ring-offset-0 h-4 w-4 bg-warm" />
+                  <span class="text-[13px] text-ink group-hover:text-accent font-medium">Bungalows <span class="text-muted text-xs ml-1">({{ bungalowCount }})</span></span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- Price Range -->
+            <div class="flex flex-col border-t border-border pt-6">
+              <label class="text-[10px] text-muted mb-3 font-bold uppercase tracking-wider">Price Range</label>
+              <div class="flex items-center gap-2">
+                <input type="number" [(ngModel)]="search.minPrice" placeholder="Min" class="w-full rounded-xl border border-border bg-warm/30 px-4 py-2 text-sm text-ink focus:border-accent focus:outline-none" />
+                <span class="text-muted">-</span>
+                <input type="number" [(ngModel)]="search.maxPrice" placeholder="Max" class="w-full rounded-xl border border-border bg-warm/30 px-4 py-2 text-sm text-ink focus:border-accent focus:outline-none" />
+              </div>
+            </div>
+
+            <!-- Amenities -->
+            <div class="flex flex-col border-t border-border pt-6">
+              <label class="text-[10px] text-muted mb-3 font-bold uppercase tracking-wider">Amenities</label>
+              <div class="space-y-3">
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="checkbox" [(ngModel)]="search.hasPool" class="rounded border-border text-accent focus:ring-accent focus:ring-offset-0 h-4 w-4 bg-warm" />
+                  <span class="text-[13px] text-ink group-hover:text-accent font-medium">Private Pool</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="checkbox" [(ngModel)]="search.isBeachFacing" class="rounded border-border text-accent focus:ring-accent focus:ring-offset-0 h-4 w-4 bg-warm" />
+                  <span class="text-[13px] text-ink group-hover:text-accent font-medium">Beach Facing</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group">
+                  <input type="checkbox" [(ngModel)]="search.hasGarden" class="rounded border-border text-accent focus:ring-accent focus:ring-offset-0 h-4 w-4 bg-warm" />
+                  <span class="text-[13px] text-ink group-hover:text-accent font-medium">Private Garden</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="flex flex-col pt-4">
+              <button (click)="applyFilters()" class="w-full rounded-full bg-accent hover:bg-accent-hover px-4 py-3.5 text-xs font-bold text-white transition-colors mb-2 tracking-widest uppercase">
+                Apply Filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Content (Grid) -->
+      <div class="w-full lg:flex-1">
+        
+        <!-- Top Toolbar -->
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-border">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-[13px] font-bold text-muted">
+            <button class="flex items-center gap-1 cursor-pointer hover:text-ink transition-colors">Bundles <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+            <button class="flex items-center gap-1 cursor-pointer hover:text-ink transition-colors">Location <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+            <button class="flex items-center gap-1 cursor-pointer hover:text-ink transition-colors">Capacity <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+          </div>
+          <div class="flex items-center">
+            <div class="relative">
+              <select [(ngModel)]="search.sortBy" (change)="applyFilters()" class="appearance-none text-[13px] text-muted border border-border rounded-lg pl-4 pr-10 py-2.5 bg-white cursor-pointer hover:border-accent hover:text-ink transition-colors font-medium focus:outline-none focus:border-ink">
+                <option value="">Sort by : Recommended</option>
+                <option value="price_asc">Sort by : Price (Low to High)</option>
+                <option value="price_desc">Sort by : Price (High to Low)</option>
+              </select>
+              <svg class="absolute right-3 top-3 w-4 h-4 text-muted pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="loading" class="py-20 text-center flex justify-center">
+          <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-border border-t-accent"></div>
+        </div>
+
+        <div *ngIf="!loading && properties.length === 0" class="rounded-[24px] border border-border bg-white py-20 text-center">
+          <h3 class="text-xl font-serif text-ink mb-2 font-bold">No properties found</h3>
+          <button (click)="resetFilters()" class="text-accent hover:underline font-bold text-sm tracking-wide uppercase">Clear filters</button>
+        </div>
+
+        <!-- Property Grid -->
+        <div *ngIf="!loading && properties.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+          <div *ngFor="let property of properties" class="flex flex-col group relative">
+            <app-property-card [property]="property" class="flex-1"></app-property-card>
+            
+            <!-- Hover actions overlay effect mimicking e-commerce -->
+            <div *ngIf="false" class="hidden mt-4 flex flex-col gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity absolute bottom-0 left-0 right-0 bg-white p-2 border border-gray-100 shadow-xl z-20 translate-y-full rounded-2xl">
+              <!-- Replaced by the inline button in property card -->
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </main>
+
+  <div *ngIf="bookingModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 backdrop-blur-sm px-4">
+    <div class="w-full max-w-md rounded-3xl border border-border bg-white shadow-2xl transform transition-all">
+      <div class="flex items-center justify-between border-b border-border p-6">
+        <h3 class="font-serif text-2xl font-bold text-ink">Book Your Stay</h3>
+        <button (click)="closeBookModal()" class="text-muted hover:text-accent transition-colors bg-warm p-2 rounded-full hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="p-6">
+        <div class="mb-6 rounded-2xl bg-warm p-4 flex items-center gap-4 border border-border">
+           <div class="h-16 w-16 rounded-xl overflow-hidden flex-shrink-0 bg-gray-200">
+             <img *ngIf="selectedProperty?.imageUrl" [src]="selectedProperty?.imageUrl" [alt]="selectedProperty?.title" class="h-full w-full object-cover" />
+           </div>
+           <div>
+             <p class="font-bold text-[15px] text-ink mb-1 line-clamp-1 truncate">{{ selectedProperty?.title }}</p>
+             <p class="text-accent text-sm font-bold">₹{{ selectedProperty?.price | number }} <span class="text-muted font-normal">/ night</span></p>
+           </div>
+        </div>
+
+        <form (ngSubmit)="submitBooking()" class="space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1.5">
+              <label class="text-[10px] text-muted font-bold uppercase tracking-wider">Check In</label>
+              <input type="date" name="checkIn" [(ngModel)]="bookingForm.checkInDate" required class="w-full rounded-xl border border-border bg-warm px-3 py-3 text-sm text-ink focus:border-accent focus:bg-white focus:outline-none focus:ring-1 focus:ring-accent" />
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-[10px] text-muted font-bold uppercase tracking-wider">Check Out</label>
+              <input type="date" name="checkOut" [(ngModel)]="bookingForm.checkOutDate" required class="w-full rounded-xl border border-border bg-warm px-3 py-3 text-sm text-ink focus:border-accent focus:bg-white focus:outline-none focus:ring-1 focus:ring-accent" />
+            </div>
+          </div>
+          
+          <div class="space-y-1.5">
+            <label class="text-[10px] text-muted font-bold uppercase tracking-wider">Number of Guests</label>
+            <input type="number" name="guests" [(ngModel)]="bookingForm.guests" min="1" [max]="selectedProperty?.maxGuests || 10" required class="w-full rounded-xl border border-border bg-warm px-3 py-3 text-sm text-ink focus:border-accent focus:bg-white focus:outline-none focus:ring-1 focus:ring-accent" />
+            <p class="text-xs text-muted mt-2 flex items-center gap-1 font-medium">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Maximum {{ selectedProperty?.maxGuests }} guests allowed.
+            </p>
+          </div>
+
+          <div class="mt-8 flex gap-3 pt-4 border-t border-border">
+            <button type="button" (click)="closeBookModal()" class="flex-1 rounded-xl border border-border py-3.5 text-sm font-bold text-muted hover:bg-warm hover:text-ink transition-colors">
+              Cancel
+            </button>
+            <button type="submit" class="flex-1 rounded-xl bg-accent py-3.5 text-sm font-bold text-white hover:bg-accent-hover transition-colors shadow-lg shadow-accent/20">
+              Confirm Booking
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

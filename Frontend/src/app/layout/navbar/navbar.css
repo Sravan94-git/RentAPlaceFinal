@@ -1,0 +1,78 @@
+.rap-nav {
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: rgba(250, 250, 255, 0.92);
+  border-bottom: 1px solid var(--rap-border);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.9rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.rap-brand {
+  color: var(--rap-ink);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.rap-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.rap-links a {
+  color: var(--rap-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.rap-links a:hover {
+  color: var(--rap-accent-deep);
+}
+
+.rap-actions {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.rap-btn {
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+.rap-btn-ghost {
+  border: 1px solid var(--rap-border);
+  color: var(--rap-ink);
+}
+
+.rap-btn-solid {
+  background: var(--rap-accent);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .rap-nav {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+    padding: 0.9rem 1rem;
+  }
+
+  .rap-links {
+    gap: 1rem;
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+}

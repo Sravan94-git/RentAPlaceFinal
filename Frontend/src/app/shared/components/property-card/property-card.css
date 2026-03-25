@@ -1,0 +1,105 @@
+.rap-property-card {
+  background: #fff;
+  border: 1px solid var(--rap-border);
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(69, 66, 104, 0.1);
+  overflow: hidden;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.rap-property-card:hover {
+  box-shadow: 0 16px 30px rgba(69, 66, 104, 0.14);
+  transform: translateY(-3px);
+}
+
+.rap-image-wrap {
+  position: relative;
+}
+
+.rap-image {
+  height: 230px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.rap-tag {
+  background: rgba(30, 29, 38, 0.88);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  left: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.7rem;
+  position: absolute;
+  text-transform: uppercase;
+  top: 0.8rem;
+}
+
+.rap-body {
+  padding: 1rem;
+}
+
+.rap-head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rap-head h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.rap-rating {
+  color: #e09f2a;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.rap-location {
+  color: var(--rap-muted);
+  margin: 0.45rem 0 0.95rem;
+}
+
+.rap-foot {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rap-foot p {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.rap-foot p span {
+  color: var(--rap-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.rap-foot button {
+  background: var(--rap-accent);
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.48rem 0.95rem;
+  text-transform: uppercase;
+}
+
+.rap-secondary-btn {
+  background: #f1f0fb !important;
+  color: #544f93 !important;
+}
+
+.rap-danger-btn {
+  background: #fde8ea !important;
+  color: #a22530 !important;
+}
