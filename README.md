@@ -250,7 +250,3 @@ This project is licensed under the **MIT License**.
 AI | Machine Learning | Deep Learning | Computer Vision | Full Stack Developer
 
 If you found this project useful, don't forget to ⭐ the repository!
-
-AI | Machine Learning | Full Stack Developer | ASP.NET Core | Angular | SQL Server
-
-If you found this project useful, don't forget to ⭐ the repository!
