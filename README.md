@@ -1,4 +1,4 @@
-# 🏠 RentAPlace – Property Rental Platform
+# 🏠 RentAPlace – Property Rental Management Platform
 
 [![.NET](https://img.shields.io/badge/.NET-10.0-purple.svg)](https://dotnet.microsoft.com/)
 [![Angular](https://img.shields.io/badge/Frontend-Angular-red.svg)](https://angular.io/)
